@@ -127,13 +127,13 @@
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
  </head>
- <body class="bg-gradient-to-br from-blue-50 to-indigo-100 h-full"><!-- Hamburger Menu --> <button id="hamburger" class="hamburger">
+ <body class="bg-gradient-to-br from-white via-blue-50 to-blue-100 h-full"><!-- Hamburger Menu --> <button id="hamburger" class="hamburger">
    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
    </svg></button> <!-- Login Page -->
   <div id="loginPage" class="flex items-center justify-center min-h-screen p-4">
    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
     <div class="text-center mb-8">
-     <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mx-auto mb-4 flex items-center justify-center"><span class="text-white text-4xl">📦</span>
+     <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center"><span class="text-white text-4xl">📦</span>
      </div>
      <h1 class="text-3xl font-bold text-gray-800 mb-2">ระบบยืมคืนและเบิกจ่าย</h1>
      <p class="text-gray-600">กรุณาเข้าสู่ระบบเพื่อใช้งาน</p>
@@ -142,7 +142,7 @@
      <div class="mb-4"><label class="block text-gray-700 font-medium mb-2" for="username">ชื่อผู้ใช้</label> <input type="text" id="username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกชื่อผู้ใช้">
      </div>
      <div class="mb-6"><label class="block text-gray-700 font-medium mb-2" for="password">รหัสผ่าน</label> <input type="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกรหัสผ่าน">
-     </div><button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transition duration-200"> เข้าสู่ระบบ </button>
+     </div><button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition duration-200"> เข้าสู่ระบบ </button>
     </form>
     <div class="mt-6 p-4 bg-blue-50 rounded-lg">
      <p class="text-sm text-gray-600 text-center"><strong>ข้อมูลเริ่มต้น:</strong><br>
@@ -151,7 +151,7 @@
    </div>
   </div><!-- Main Application -->
   <div id="mainApp" class="hidden h-full"><!-- Sidebar -->
-   <div id="sidebar" class="sidebar fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-blue-600 to-indigo-700 text-white shadow-xl z-50">
+   <div id="sidebar" class="sidebar fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-blue-700 via-blue-600 to-blue-500 text-white shadow-xl z-50">
     <div class="p-6 border-b border-blue-500">
      <div class="flex items-center space-x-3">
       <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center"><span class="text-2xl">📦</span>
@@ -169,10 +169,10 @@
     <div id="dashboardPage" class="page">
      <h1 class="text-2xl md:text-4xl font-bold text-gray-800 mb-8">แดชบอร์ด</h1>
      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-      <div class="card bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
+      <div class="card bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl p-6 text-white shadow-lg">
        <div class="flex items-center justify-between">
         <div>
-         <p class="text-blue-100 text-sm mb-1">จำนวนวัสดุทั้งหมด</p>
+         <p class="text-blue-50 text-sm mb-1">จำนวนวัสดุทั้งหมด</p>
          <h3 class="text-3xl font-bold" id="totalItems">0</h3>
         </div>
         <div class="text-5xl opacity-80">
@@ -180,10 +180,10 @@
         </div>
        </div>
       </div>
-      <div class="card bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg">
+      <div class="card bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
        <div class="flex items-center justify-between">
         <div>
-         <p class="text-green-100 text-sm mb-1">รายการยืม</p>
+         <p class="text-blue-50 text-sm mb-1">รายการยืม</p>
          <h3 class="text-3xl font-bold" id="totalBorrows">0</h3>
         </div>
         <div class="text-5xl opacity-80">
@@ -191,10 +191,10 @@
         </div>
        </div>
       </div>
-      <div class="card bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+      <div class="card bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 text-white shadow-lg">
        <div class="flex items-center justify-between">
         <div>
-         <p class="text-purple-100 text-sm mb-1">รายการเบิก</p>
+         <p class="text-blue-50 text-sm mb-1">รายการเบิก</p>
          <h3 class="text-3xl font-bold" id="totalDisburses">0</h3>
         </div>
         <div class="text-5xl opacity-80">
@@ -202,10 +202,10 @@
         </div>
        </div>
       </div>
-      <div class="card bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-6 text-white shadow-lg">
+      <div class="card bg-gradient-to-br from-blue-700 to-blue-800 rounded-xl p-6 text-white shadow-lg">
        <div class="flex items-center justify-between">
         <div>
-         <p class="text-red-100 text-sm mb-1">รายการค้างคืน</p>
+         <p class="text-blue-50 text-sm mb-1">รายการค้างคืน</p>
          <h3 class="text-3xl font-bold" id="overdueItems">0</h3>
         </div>
         <div class="text-5xl opacity-80">
@@ -234,7 +234,7 @@
        </div>
        <div><label class="block text-gray-700 font-medium mb-2" for="itemQuantity">จำนวนวัสดุ</label> <input type="number" id="itemQuantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกจำนวน" min="0" required>
        </div>
-       <div class="md:col-span-2"><button type="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transition duration-200"> เพิ่มวัสดุ </button>
+       <div class="md:col-span-2"><button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition duration-200"> เพิ่มวัสดุ </button>
        </div>
       </form>
      </div>
@@ -281,7 +281,7 @@
         <div><label class="block text-gray-700 font-medium mb-2" for="borrowNote">หมายเหตุ</label> <input type="text" id="borrowNote" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกหมายเหตุ (ถ้ามี)">
         </div>
        </div>
-       <div class="mt-6"><button type="submit" class="w-full md:w-auto bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition duration-200"> บันทึกการยืม </button>
+       <div class="mt-6"><button type="submit" class="w-full md:w-auto bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition duration-200"> บันทึกการยืม </button>
        </div>
       </form>
      </div>
@@ -305,7 +305,7 @@
         <div><label class="block text-gray-700 font-medium mb-2" for="disburseNote">หมายเหตุ</label> <input type="text" id="disburseNote" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกหมายเหตุ (ถ้ามี)">
         </div>
        </div>
-       <div class="mt-6"><button type="submit" class="w-full md:w-auto bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-purple-700 transition duration-200"> บันทึกการเบิก </button>
+       <div class="mt-6"><button type="submit" class="w-full md:w-auto bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition duration-200"> บันทึกการเบิก </button>
        </div>
       </form>
      </div>
@@ -374,7 +374,7 @@
     </div>
    </div>
   </div><!-- Footer -->
-  <div id="footer" class="hidden ml-0 md:ml-64 bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-4 px-4 md:px-8">
+  <div id="footer" class="hidden ml-0 md:ml-64 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 text-white py-4 px-4 md:px-8">
    <div class="text-center">
     <p class="font-medium text-sm md:text-base">ระบบยืมคืนและเบิกจ่าย (Borrowing and Disbursement Management System)</p>
     <p class="text-xs md:text-sm text-blue-200">© <span id="currentYear"></span> All Rights Reserved</p>
@@ -421,7 +421,7 @@
     <h3 class="text-2xl font-bold text-gray-800 mb-6">แก้ไขรายการเบิก</h3>
     <form id="editDisburseForm"><input type="hidden" id="editDisburseId">
      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div><label class="block text-gray-700 font-medium mb-2" for="editDisburserName">ชื่อผู้เบิก</label> <input type="text" id="editDisburserName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <div><label class="block text-gray-700 font-medium mb-2" for="editDisburserName">ชื����อผู้เบิก</label> <input type="text" id="editDisburserName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
       </div>
       <div><label class="block text-gray-700 font-medium mb-2" for="editDisburserPhone">เบอร์โทรศัพท์ (10 หลัก)</label> <input type="tel" id="editDisburserPhone" maxlength="10" pattern="[0-9]{10}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
       </div>
@@ -504,17 +504,6 @@
       const password = document.getElementById('password').value;
 
       if (username === 'Admin' && password === 'Admin1234') {
-        document.getElementById('loginPage').classList.add('hidden');
-        document.getElementById('mainApp').classList.remove('hidden');
-        document.getElementById('footer').classList.remove('hidden');
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-        showPage('dashboard');
-        loadAllData();
-        showToast('เข้าสู่ระบบสำเร็จ', 'success');
-      } else {
-        showToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง', 'error');
-      }
-        if (username === 'Kumpow' && password === 'Kumpow01') {
         document.getElementById('loginPage').classList.add('hidden');
         document.getElementById('mainApp').classList.remove('hidden');
         document.getElementById('footer').classList.remove('hidden');
@@ -754,7 +743,7 @@
     }
 
     // Delete Stock
-    function deleteStock(id) {
+    async function deleteStock(id) {
       currentDeleteId = id;
       currentDeleteType = 'stock';
       currentDeleteData = null;
@@ -767,18 +756,37 @@
       showLoading();
       
       try {
+        // ถ้าเป็นการลบสต็อก ต้องลบประวัติการยืมและเบิกที่เกี่ยวข้องด้วย
+        if (currentDeleteType === 'stock') {
+          // ลบประวัติการยืม
+          const borrowsSnapshot = await db.collection('borrows').where('itemId', '==', currentDeleteId).get();
+          const borrowDeletePromises = borrowsSnapshot.docs.map(doc => doc.ref.delete());
+          await Promise.all(borrowDeletePromises);
+          
+          // ลบประวัติการเบิก
+          const disbursesSnapshot = await db.collection('disburses').where('itemId', '==', currentDeleteId).get();
+          const disburseDeletePromises = disbursesSnapshot.docs.map(doc => doc.ref.delete());
+          await Promise.all(disburseDeletePromises);
+        }
+        
         // ถ้าเป็นการลบการยืม ต้องคืนสต็อก
         if (currentDeleteType === 'borrows' && currentDeleteData) {
-          await db.collection('stock').doc(currentDeleteData.itemId).update({
-            quantity: firebase.firestore.FieldValue.increment(currentDeleteData.quantity)
-          });
+          const stockDoc = await db.collection('stock').doc(currentDeleteData.itemId).get();
+          if (stockDoc.exists) {
+            await db.collection('stock').doc(currentDeleteData.itemId).update({
+              quantity: firebase.firestore.FieldValue.increment(currentDeleteData.quantity)
+            });
+          }
         }
         
         // ถ้าเป็นการลบการเบิก ต้องคืนสต็อก
         if (currentDeleteType === 'disburses' && currentDeleteData) {
-          await db.collection('stock').doc(currentDeleteData.itemId).update({
-            quantity: firebase.firestore.FieldValue.increment(currentDeleteData.quantity)
-          });
+          const stockDoc = await db.collection('stock').doc(currentDeleteData.itemId).get();
+          if (stockDoc.exists) {
+            await db.collection('stock').doc(currentDeleteData.itemId).update({
+              quantity: firebase.firestore.FieldValue.increment(currentDeleteData.quantity)
+            });
+          }
         }
         
         await db.collection(currentDeleteType).doc(currentDeleteId).delete();
@@ -923,7 +931,7 @@
           // ใช้ Promise เพื่อรอการอัปโหลดเสร็จสิ้น
           await new Promise((resolve, reject) => {
             const timeout = setTimeout(() => {
-              reject(new Error('การอัปโหลดรูปภาพใช้เวลานานเกินไป'));
+              reject(new Error('การอัปโหลดรูปภาพ���ช้เวลานานเกินไป'));
             }, 30000); // 30 วินาที
             
             uploadTask.on('state_changed', 
@@ -1024,7 +1032,7 @@
       }
       
       if (!itemId) {
-        showToast('กรุณาเลือกวัสดุที่เบิก', 'error');
+        showToast('กรุณาเลือกวัสดุที���เบิก', 'error');
         return;
       }
       
@@ -1100,7 +1108,7 @@
             <td class="px-4 py-3">${statusBadge}</td>
             <td class="px-4 py-3">
               <div class="flex flex-col md:flex-row gap-2">
-                ${data.status === 'borrowing' ? `<button onclick="returnItem('${doc.id}')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">คืนวัสดุ</button>` : ''}
+                ${data.status === 'borrowing' ? `<button onclick="returnItem('${doc.id}')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">คืนวัส���ุ</button>` : ''}
                 <button onclick="editBorrow('${doc.id}')" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm">แก้ไข</button>
                 <button onclick="deleteBorrow('${doc.id}')" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">ลบ</button>
               </div>
@@ -1163,7 +1171,7 @@
       }
       
       if (new Date(returnDate) <= new Date(borrowDate)) {
-        showToast('วันที่กำหนดคืนต้องมากกว่าวันที่ยืม', 'error');
+        showToast('วันที่กำหนดคืนต้องมากกว��าวันที่ยืม', 'error');
         return;
       }
       
@@ -1262,7 +1270,7 @@
       const endDate = document.getElementById('filterEndDate').value;
       
       if (!startDate || !endDate) {
-        showToast('กรุณาเลือกช่วงวันที่', 'warning');
+        showToast('กรุณาเลือกช่วงวั��ที่', 'warning');
         return;
       }
       
@@ -1662,5 +1670,5 @@
       loadStock();
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ba8dc6b64e2a1c8',t:'MTc2Nzg0NTU5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9baa4dd9a36ba1c8',t:'MTc2Nzg2MDcyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
