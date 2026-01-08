@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
@@ -326,6 +325,7 @@
           <th class="px-4 py-3 text-left text-gray-700 font-semibold">วันที่ยืม</th>
           <th class="px-4 py-3 text-left text-gray-700 font-semibold">วันที่คืน</th>
           <th class="px-4 py-3 text-left text-gray-700 font-semibold">สถานะ</th>
+          <th class="px-4 py-3 text-left text-gray-700 font-semibold">รูปภาพ</th>
           <th class="px-4 py-3 text-left text-gray-700 font-semibold">การจัดการ</th>
          </tr>
         </thead>
@@ -421,7 +421,7 @@
     <h3 class="text-2xl font-bold text-gray-800 mb-6">แก้ไขรายการเบิก</h3>
     <form id="editDisburseForm"><input type="hidden" id="editDisburseId">
      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div><label class="block text-gray-700 font-medium mb-2" for="editDisburserName">ชื����อผู้เบิก</label> <input type="text" id="editDisburserName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <div><label class="block text-gray-700 font-medium mb-2" for="editDisburserName">ชื่อผู้เบิก</label> <input type="text" id="editDisburserName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
       </div>
       <div><label class="block text-gray-700 font-medium mb-2" for="editDisburserPhone">เบอร์โทรศัพท์ (10 หลัก)</label> <input type="tel" id="editDisburserPhone" maxlength="10" pattern="[0-9]{10}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
       </div>
@@ -448,6 +448,15 @@
     <div class="flex flex-col md:flex-row gap-4"><button onclick="confirmDelete()" class="flex-1 bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-red-600">ลบ</button> <button onclick="closeDeleteModal()" class="flex-1 bg-gray-500 text-white py-2 rounded-lg font-semibold hover:bg-gray-600">ยกเลิก</button>
     </div>
    </div>
+  </div><!-- Image Modal -->
+  <div id="imageModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center z-50 p-4">
+   <div class="bg-white rounded-xl shadow-2xl p-4 md:p-6 w-full max-w-2xl">
+    <div class="flex justify-between items-center mb-4">
+     <h3 class="text-xl font-bold text-gray-800">รูปภาพวัสดุ</h3><button onclick="closeImageModal()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">×</button>
+    </div>
+    <div class="flex justify-center"><img id="modalImage" src="" alt="Image" class="max-w-full max-h-96 rounded-lg">
+    </div>
+   </div>
   </div><!-- Loading Overlay -->
   <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
    <div class="bg-white rounded-xl p-8 flex flex-col items-center">
@@ -470,7 +479,6 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const storage = firebase.storage();
 
     // Global variables
     let currentDeleteId = null;
@@ -582,8 +590,8 @@
       document.getElementById('loadingOverlay').classList.add('hidden');
     }
 
-    // Resize Image Function
-    function resizeImage(file, maxWidth, maxHeight) {
+    // Convert Image to Base64
+    function convertImageToBase64(file, maxWidth, maxHeight) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -610,9 +618,9 @@
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, height);
             
-            canvas.toBlob((blob) => {
-              resolve(blob);
-            }, file.type, 0.7);
+            // Convert to Base64 with compression (0.7 quality)
+            const base64String = canvas.toDataURL(file.type, 0.7);
+            resolve(base64String);
           };
           img.onerror = reject;
           img.src = e.target.result;
@@ -620,6 +628,16 @@
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
+    }
+
+    // Show Image Modal
+    function showImageModal(imageBase64) {
+      document.getElementById('modalImage').src = imageBase64;
+      document.getElementById('imageModal').classList.remove('hidden');
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').classList.add('hidden');
     }
 
     // Add Stock
@@ -919,40 +937,17 @@
         const itemDoc = await db.collection('stock').doc(itemId).get();
         const itemData = itemDoc.data();
         
-        let imageUrl = '';
-        // อัปโหลดรูปภาพพร้อม timeout และ compression
+        // แปลงรูปภาพเป็น Base64
+        let imageBase64 = '';
         try {
-          const resizedImage = await resizeImage(imageFile, 800, 800);
-          const storageRef = storage.ref();
-          const imageRef = storageRef.child(`borrow-images/${Date.now()}_${imageFile.name}`);
-          
-          const uploadTask = imageRef.put(resizedImage);
-          
-          // ใช้ Promise เพื่อรอการอัปโหลดเสร็จสิ้น
-          await new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => {
-              reject(new Error('การอัปโหลดรูปภาพ���ช้เวลานานเกินไป'));
-            }, 30000); // 30 วินาที
-            
-            uploadTask.on('state_changed', 
-              null,
-              (error) => {
-                clearTimeout(timeout);
-                reject(error);
-              },
-              async () => {
-                clearTimeout(timeout);
-                imageUrl = await uploadTask.snapshot.ref.getDownloadURL();
-                resolve();
-              }
-            );
-          });
-        } catch (uploadError) {
+          imageBase64 = await convertImageToBase64(imageFile, 800, 800);
+        } catch (convertError) {
           hideLoading();
-          showToast('เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ: ' + uploadError.message, 'error');
+          showToast('เกิดข้อผิดพลาดในการแปลงรูปภาพ: ' + convertError.message, 'error');
           return;
         }
         
+        // บันทึกข้อมูลลง Firestore พร้อมรูปภาพ Base64
         await db.collection('borrows').add({
           borrowerName: borrowerName,
           borrowerPhone: borrowerPhone,
@@ -963,7 +958,7 @@
           returnDate: returnDate,
           actualReturnDate: null,
           note: note,
-          imageUrl: imageUrl,
+          imageBase64: imageBase64,
           status: 'borrowing',
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
@@ -1032,7 +1027,7 @@
       }
       
       if (!itemId) {
-        showToast('กรุณาเลือกวัสดุที���เบิก', 'error');
+        showToast('กรุณาเลือกวัสดุที่เบิก', 'error');
         return;
       }
       
@@ -1107,8 +1102,11 @@
             <td class="px-4 py-3 text-gray-800">${data.actualReturnDate ? formatDate(data.actualReturnDate) : formatDate(data.returnDate)}</td>
             <td class="px-4 py-3">${statusBadge}</td>
             <td class="px-4 py-3">
+              ${data.imageBase64 ? `<button onclick='showImageModal("${data.imageBase64}")' class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">ดูรูป</button>` : '<span class="text-gray-400">ไม่มีรูป</span>'}
+            </td>
+            <td class="px-4 py-3">
               <div class="flex flex-col md:flex-row gap-2">
-                ${data.status === 'borrowing' ? `<button onclick="returnItem('${doc.id}')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">คืนวัส���ุ</button>` : ''}
+                ${data.status === 'borrowing' ? `<button onclick="returnItem('${doc.id}')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">คืนวัสดุ</button>` : ''}
                 <button onclick="editBorrow('${doc.id}')" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm">แก้ไข</button>
                 <button onclick="deleteBorrow('${doc.id}')" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">ลบ</button>
               </div>
@@ -1171,7 +1169,7 @@
       }
       
       if (new Date(returnDate) <= new Date(borrowDate)) {
-        showToast('วันที่กำหนดคืนต้องมากกว��าวันที่ยืม', 'error');
+        showToast('วันที่กำหนดคืนต้องมากกว่าวันที่ยืม', 'error');
         return;
       }
       
@@ -1270,7 +1268,7 @@
       const endDate = document.getElementById('filterEndDate').value;
       
       if (!startDate || !endDate) {
-        showToast('กรุณาเลือกช่วงวั��ที่', 'warning');
+        showToast('กรุณาเลือกช่วงวันที่', 'warning');
         return;
       }
       
@@ -1302,6 +1300,9 @@
               <td class="px-4 py-3 text-gray-800">${formatDate(data.borrowDate)}</td>
               <td class="px-4 py-3 text-gray-800">${data.actualReturnDate ? formatDate(data.actualReturnDate) : formatDate(data.returnDate)}</td>
               <td class="px-4 py-3">${statusBadge}</td>
+              <td class="px-4 py-3">
+                ${data.imageBase64 ? `<button onclick='showImageModal("${data.imageBase64}")' class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">ดูรูป</button>` : '<span class="text-gray-400">ไม่มีรูป</span>'}
+              </td>
               <td class="px-4 py-3">
                 <div class="flex flex-col md:flex-row gap-2">
                   ${data.status === 'borrowing' ? `<button onclick="returnItem('${doc.id}')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">คืนวัสดุ</button>` : ''}
@@ -1630,8 +1631,8 @@
           datasets: [{
             label: 'จำนวนที่ถูกเบิก',
             data: topDisburses.map(item => item[1]),
-            backgroundColor: 'rgba(168, 85, 247, 0.8)',
-            borderColor: 'rgba(168, 85, 247, 1)',
+            backgroundColor: 'rgba(59, 130, 246, 0.8)',
+            borderColor: 'rgba(59, 130, 246, 1)',
             borderWidth: 2
           }]
         },
@@ -1670,5 +1671,5 @@
       loadStock();
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9baa4dd9a36ba1c8',t:'MTc2Nzg2MDcyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9baab3f1b621893f',t:'MTc2Nzg2NDkwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
