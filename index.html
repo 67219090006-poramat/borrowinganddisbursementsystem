@@ -266,13 +266,37 @@
      <div class="bg-white rounded-xl shadow-lg p-4 md:p-6 mb-6">
       <h3 class="text-xl font-bold text-gray-800 mb-4">เพิ่มวัสดุใหม่</h3>
       <form id="addStockForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-       <div><label class="block text-gray-700 font-medium mb-2" for="itemName">ชื่อวัสดุ</label> <input type="text" id="itemName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกชื่อวัสดุ" required>
-       </div>
-       <div><label class="block text-gray-700 font-medium mb-2" for="itemQuantity">จำนวนวัสดุ</label> <input type="number" id="itemQuantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกจำนวน" min="0" required>
-       </div>
-       <div class="md:col-span-2"><button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition duration-200"> เพิ่มวัสดุ </button>
-       </div>
-      </form>
+  <div>
+    <label class="block text-gray-700 font-medium mb-2" for="itemName">ชื่อวัสดุ</label>
+    <input type="text" id="itemName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกชื่อวัสดุ" required>
+  </div>
+
+  <div>
+    <label class="block text-gray-700 font-medium mb-2" for="itemQuantity">จำนวนวัสดุ</label>
+    <input type="number" id="itemQuantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกจำนวน" min="0" required>
+  </div>
+
+  <div>
+    <label class="block text-gray-700 font-medium mb-2" for="receivedDate">วันที่รับพัสดุ</label>
+    <input type="date" id="receivedDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="เลือกวันที่รับ">
+  </div>
+
+  <div>
+    <label class="block text-gray-700 font-medium mb-2" for="purchaseBudget">งบประมาณในการจัด-ซื้อ (บาท)</label>
+    <input type="number" step="0.01" id="purchaseBudget" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกงบประมาณ" min="0">
+  </div>
+
+  <div class="md:col-span-2">
+    <label class="block text-gray-700 font-medium mb-2" for="itemNote">หมายเหตุ</label>
+    <input type="text" id="itemNote" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="กรอกหมายเหตุ">
+  </div>
+
+  <div class="md:col-span-2">
+    <button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition duration-200">
+      เพิ่มวัสดุ
+    </button>
+  </div>
+</form>
      </div>
      <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
@@ -420,14 +444,53 @@
   <div id="editStockModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center z-50 p-4">
    <div class="bg-white rounded-xl shadow-2xl p-6 md:p-8 w-full max-w-md">
     <h3 class="text-2xl font-bold text-gray-800 mb-6">แก้ไขวัสดุ</h3>
-    <form id="editStockForm"><input type="hidden" id="editStockId">
-     <div class="mb-4"><label class="block text-gray-700 font-medium mb-2" for="editItemName">ชื่อวัสดุ</label> <input type="text" id="editItemName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-     </div>
-     <div class="mb-6"><label class="block text-gray-700 font-medium mb-2" for="editItemQuantity">จำนวนวัสดุ</label> <input type="number" id="editItemQuantity" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" min="0" required>
-     </div>
-     <div class="flex flex-col md:flex-row gap-4"><button type="submit" class="flex-1 bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600">บันทึก</button> <button type="button" onclick="closeEditStockModal()" class="flex-1 bg-gray-500 text-white py-2 rounded-lg font-semibold hover:bg-gray-600">ยกเลิก</button>
-     </div>
-    </form>
+    <form id="editStockForm">
+  <input type="hidden" id="editStockId">
+
+  <div class="mb-4">
+    <label class="block text-gray-700 font-medium mb-2">ชื่อวัสดุ</label>
+    <input type="text" id="editItemName"
+      class="w-full px-4 py-2 border rounded-lg" required>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 font-medium mb-2">จำนวนวัสดุ</label>
+    <input type="number" id="editItemQuantity"
+      class="w-full px-4 py-2 border rounded-lg" min="0" required>
+  </div>
+
+  <!-- ✅ ช่องที่เพิ่ม ต้องอยู่ตรงนี้ -->
+  <div class="mb-4">
+    <label class="block text-gray-700 font-medium mb-2">วันที่รับพัสดุ</label>
+    <input type="date" id="editReceivedDate"
+      class="w-full px-4 py-2 border rounded-lg">
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 font-medium mb-2">งบประมาณในการจัด-ซื้อ</label>
+    <input type="number" id="editPurchaseBudget"
+      class="w-full px-4 py-2 border rounded-lg">
+  </div>
+
+  <div class="mb-6">
+    <label class="block text-gray-700 font-medium mb-2">หมายเหตุ</label>
+    <input type="text" id="editNote"
+      class="w-full px-4 py-2 border rounded-lg">
+  </div>
+
+  <!-- ✅ ปุ่มต้องอยู่ล่างสุด -->
+  <div class="flex flex-col md:flex-row gap-4">
+    <button type="submit"
+      class="flex-1 bg-blue-500 text-white py-2 rounded-lg font-semibold">
+      บันทึก
+    </button>
+    <button type="button"
+      onclick="closeEditStockModal()"
+      class="flex-1 bg-gray-500 text-white py-2 rounded-lg font-semibold">
+      ยกเลิก
+    </button>
+  </div>
+</form>
    </div>
   </div><!-- Edit Borrow Modal -->
   <div id="editBorrowModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center z-50 p-4">
@@ -678,40 +741,52 @@
     }
 
     // Add Stock
-    document.getElementById('addStockForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const name = document.getElementById('itemName').value.trim();
-      const quantity = parseInt(document.getElementById('itemQuantity').value);
-      
-      if (!name) {
-        showToast('กรุณากรอกชื่อวัสดุ', 'error');
-        return;
-      }
-      
-      if (quantity < 0) {
-        showToast('จำนวนวัสดุต้องไม่ติดลบ', 'error');
-        return;
-      }
-      
-      showLoading();
-      
-      try {
-        await db.collection('stock').add({
-          name: name,
-          quantity: quantity,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        
-        showToast('เพิ่มวัสดุสำเร็จ', 'success');
-        document.getElementById('addStockForm').reset();
-        loadStock();
-      } catch (error) {
-        showToast('เกิดข้อผิดพลาด: ' + error.message, 'error');
-      } finally {
-        hideLoading();
-      }
+    document.getElementById('addStockForm').addEventListener('submit', async (e) => {e.preventDefault();
+
+  const name = document.getElementById('itemName').value.trim();
+  const quantity = parseInt(document.getElementById('itemQuantity').value);
+  const receivedDate = document.getElementById('receivedDate').value; // ISO date string or empty
+  const purchaseBudgetRaw = document.getElementById('purchaseBudget').value;
+  const purchaseBudget = purchaseBudgetRaw ? parseFloat(purchaseBudgetRaw) : null;
+  const note = document.getElementById('itemNote').value.trim();
+
+  if (!name) {
+    showToast('กรุณากรอกชื่อวัสดุ', 'error');
+    return;
+  }
+
+  if (isNaN(quantity) || quantity < 0) {
+    showToast('จำนวนวัสดุต้องไม่ติดลบและต้องเป็นตัวเลข', 'error');
+    return;
+  }
+
+  if (purchaseBudget !== null && (isNaN(purchaseBudget) || purchaseBudget < 0)) {
+    showToast('งบประมาณต้องเป็นตัวเลขและไม่เป็นค่าติดลบ', 'error');
+    return;
+  }
+
+  showLoading();
+
+  try {
+    await db.collection('stock').add({
+      name: name,
+      quantity: quantity,
+      receivedDate: receivedDate || null,
+      purchaseBudget: purchaseBudget !== null ? purchaseBudget : null,
+      note: note || null,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
+
+    showToast('เพิ่มวัสดุสำเร็จ', 'success');
+    document.getElementById('addStockForm').reset();
+    loadStock();
+  } catch (error) {
+    showToast('เกิดข้อผิดพลาด: ' + error.message, 'error');
+  } finally {
+    hideLoading();
+  }
+});
+
 
     // Load Stock
     function loadStock() {
@@ -724,13 +799,29 @@
           const row = tbody.insertRow();
           
           row.innerHTML = `
-            <td class="px-4 py-3 text-gray-800">${data.name}</td>
-            <td class="px-4 py-3 text-gray-800">${data.quantity} ชิ้น</td>
-            <td class="px-4 py-3">
-              <button onclick="editStock('${doc.id}')" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2 text-sm md:text-base">แก้ไข</button>
-              <button onclick="deleteStock('${doc.id}')" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm md:text-base">ลบ</button>
-            </td>
-          `;
+  <td class="px-4 py-3 text-gray-800">
+    <div class="font-semibold">${data.name}</div>
+    <div class="text-sm text-gray-500">
+      วันที่รับพัสดุ: ${data.receivedDate ?? '-'}<br>
+      งบประมาณ: ${data.purchaseBudget !== null ? data.purchaseBudget.toLocaleString() + ' บาท' : '-'}<br>
+      หมายเหตุ: ${data.note ?? '-'}
+        </div>
+        </td>
+
+        <td class="px-4 py-3 text-gray-800">
+          ${data.quantity} ชิ้น
+        </td>
+
+        <td class="px-4 py-3">
+        <button onclick="editStock('${doc.id}')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded mr-2">
+          แก้ไข
+        </button>
+        <button onclick="deleteStock('${doc.id}')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+        ลบ
+        </button>
+        </td>
+        `;
+
         });
         
         // Search functionality
@@ -754,6 +845,10 @@
       document.getElementById('editStockId').value = id;
       document.getElementById('editItemName').value = data.name;
       document.getElementById('editItemQuantity').value = data.quantity;
+      document.getElementById('editReceivedDate').value = data.receivedDate ?? '';
+      document.getElementById('editPurchaseBudget').value = data.purchaseBudget ?? '';
+      document.getElementById('editNote').value = data.note ?? '';
+
       document.getElementById('editStockModal').classList.remove('hidden');
     }
 
@@ -778,10 +873,16 @@
       
       try {
         await db.collection('stock').doc(id).update({
-          name: name,
-          quantity: quantity
-        });
-        
+        name: name,
+        quantity: quantity,
+
+        receivedDate: document.getElementById('editReceivedDate').value || null,
+        purchaseBudget: document.getElementById('editPurchaseBudget').value
+      ? parseFloat(document.getElementById('editPurchaseBudget').value)
+      : null,
+      note: document.getElementById('editNote').value || null
+      });
+ 
         showToast('แก้ไขวัสดุสำเร็จ', 'success');
         closeEditStockModal();
         loadStock();
